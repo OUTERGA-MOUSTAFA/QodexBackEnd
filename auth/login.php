@@ -1,58 +1,60 @@
 
 <?php
 
-
 session_start();
-
+if(isset($_SESSION['Name'] , $_SESSION['Role'])){
+    if($_SESSION['Role']!='etudiant'){
+        header('location:Ensignant.php');
+    }elseif($_SESSION['Role']!='enseignant'){
+        header('location:Etudiant.php');
+    }
+    header('location:register.php');
+}
     include_once('database.php');
-    $errors = array();
+    $errorsEmail ='';
+    $errorspass = '';
 
 if (isset($_POST['Log'])) {
 
-    $email = trim($_POST['email'] ?? '') ;
-    $pass  = trim($_POST['password'] ?? '');
-
-
-    if (empty($email)) {
-        array_push($errors,"Email is empty!");
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        array_push($errors,"Email is not valid!");
-    }
+    $email =htmlspecialchars(trim($_POST['email'] ?? '')) ;
+    $pass  = htmlspecialchars(trim($_POST['password'] ?? ''));
 
     if (empty($pass)) {
-        array_push($errors,"Password is empty!");
-    } elseif (strlen($pass) < 12) {
-        array_push($errors,"Password should be at least 12 characters!");
+        $errorspass = "Password is empty!";
+    } elseif (strlen($pass) < 8) {
+        $errorspass = "your password at least was 8 characters!";
     }
+    
+    if (empty($email)) {
+        $errorsEmail = "Email is empty!";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errorsEmail = "Email is not valid!";
+    }else{
 
-
-    if (count($errors) > 0) {
         try {
-        $sql = "SELECT * FROM user WHERE email = ?";
+        $sql = "SELECT * FROM utilisateurs WHERE email = ?";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$email]);
         $user_exist = $stmt->fetch();
-
         if (!$user_exist) {
-            echo "<div style='background:#fa9595;color:red;padding:6px;border-radius:10px;margin:4px auto;font-size:large;'>Email incorrect!</div>";
-        } elseif (!password_verify($pass, $user_exist['pass'])) {
-            echo "<div style='background:#fa9595;color:red;padding:6px;border-radius:10px;margin:4px auto;font-size:large;'>Password incorrect!</div>";
-        } else {
-
-            echo "login success";
-            header("Location: index.php");
-            exit;
+            $errorsEmail = "Email incorrect!";
+        }elseif (!password_verify($pass, $user_exist['Pass'])) {
+            $errorspass = "Password incorrect!";
+        }
+        } catch (PDOException $e) {
+        echo "Database error: " . $e->getMessage();
         }
 
-    } catch (PDOException $e) {
-        echo "Database error: " . $e->getMessage();
     }
-
-    $pdo = null;
-    }      
-
-
+    if (strlen($errorspass) == 0 && strlen($errorsEmail) ==0) {
         
+        echo "<script>alert('login success!');</script>";
+        $_SESSION['Name']  = $user_exist['Name'];
+        $_SESSION['Role']  = $user_exist['Role'];
+        $_SESSION['Email'] = $_POST['email'];
+        header("location: session.php");
+        $pdo = null;
+    }       
 } 
     
 ?>
@@ -69,15 +71,26 @@ if (isset($_POST['Log'])) {
 <body>
     
 
-        <form class="max-w-sm" action="" method="POST">
+        <form class="max-w-sm" method="POST">
+        <?php  if(strlen($errorsEmail)>0): ?>
+            <div style="display:block;margin:2px auto; color:red; padding:6px;border-radius:10px; background:#fa9595;font-size:large;">
+                <?= $errorsEmail ?>
+            </div>
+        <?php endif; ?>
         <div class="mb-5">
             <label for="email-alternative" class="block mb-2.5 text-sm font-medium text-heading">Your email</label>
             <input type="email" name='email' id="email-alternative" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow placeholder:text-body" placeholder="exemple@email.com" />
         </div>
+        <?php if(strlen($errorspass)>0): ?>
+            <div style="display:block;margin:2px auto; color:red; padding:6px;border-radius:10px; background:#fa9595;font-size:large;">
+                <?= $errorspass?>
+            </div>
+        <?php endif; ?>
         <div class="mb-5">
             <label for="password-alternative" class="block mb-2.5 text-sm font-medium text-heading">Your password</label>
             <input type="password" name='password' id="password-alternative" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow placeholder:text-body" placeholder="password" />
         </div>
+                
         <div class="flex items-start mb-5">
             <label for="remember-alternative" class="flex items-center h-5">
             <input id="remember-alternative" type="checkbox" value="" class="w-4 h-4 border border-default-medium rounded-xs bg-neutral-secondary-medium focus:ring-2 focus:ring-brand-soft" required />

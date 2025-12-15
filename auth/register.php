@@ -12,7 +12,7 @@
             $repeat_pass = trim($_POST['repeat_password']);
             //$age = filter_var($_POST['age'],FILTER_VALIDATE_NUMBER_INT); => kat9bel num avec - ou +
             $errorsname = '';
-             $errorsrole = '';
+            $errorsrole = '';
              $errorsemail = '';
               $errorspass = '';
                $errorsrepeatpass = '';
@@ -58,14 +58,15 @@
                 $sql ="INSERT INTO utilisateurs (Name,Role,email, Pass)
                              value(?,?,?,?)";
                 try {
+
                     $stmt = $pdo->prepare($sql);
                     $stmt->execute([$F_name, $Role, $email, $hashedPassword]);
-                    echo "$F_name registered successfully!";
-                    setcookie('name',$F_name, time() + 3600, '/');
-                    setcookie('Role',$Role, time() + 3600, '/');
+
+                    echo "<script>alert('$F_name registered successfully!');</script>";
+                    
                     header('location:login.php');
                 } catch (PDOException $e) {
-                    echo "Database error mostafa write this problem on register page: " . $e->getMessage();
+                    echo "Database errors Moustafa write this problem on register page: " . $e->getMessage();
                 }
                 $pdo = null;
                 
@@ -88,7 +89,7 @@
         
         
         ?>
-        <form action="register.php" method="POST" >
+        <form method="POST" >
             <fieldset class="w-sm p-10 mx-auto bg-green">
                 <legend class="text-green">Register</legend>
             
@@ -125,7 +126,7 @@
             <?= $errorsrole ?>
         </div>
     <?php endif; ?>
-    
+
     <div class="relative z-0 w-full mb-5 group">
         <input type="email" name="email" id="floating_email" placeholder=" " class="block py-2.5 px-0 w-full text-sm text-heading bg-transparent border-0 border-b-2 border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer" />
         <label for="email" class="absolute text-sm text-body duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">Email</label>
