@@ -1,0 +1,79 @@
+#CREATE DATABASE test;
+USE test;
+/*
+CREATE TABLE users(
+	id INT PRIMARY KEY AUTO_INCREMENT UNIQUE,
+	Name VARCHAR(20) not null,
+	Role varchar(20) NOT NULL,
+	email VARCHAR(100) not null UNIQUE,
+	Pass VARCHAR(255) not NULL,
+	Created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+	CONSTRAINT check_Role CHECK (ROLE in ('enseignant', 'etudiant'))
+);
+*//*
+CREATE TABLE Category(
+	id INT NOT NULL AUTO_INCREMENT,
+	nom VARCHAR(50) NOT NULL,
+	description VARCHAR(100),
+	created_by INT NOT NULL,
+	created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+	updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	
+	CONSTRAINT pk_Category PRIMARY KEY (id),
+	CONSTRAINT fk_Enseignant FOREIGN KEY (created_by) REFERENCES users (id)
+);
+*/
+/*
+CREATE TABLE quiz(
+	id INT NOT NULL AUTO_INCREMENT,
+	titre VARCHAR(50) NOT NULL,
+	DESCRIPTION TEXT NOT NULL,
+	categorie_id INT NOT NULL,
+	enseignant_id INT NOT NULL,
+	created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+	updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	is_active BOOLEAN DEFAULT FALSE,
+	CONSTRAINT pk_quiz PRIMARY KEY (id),
+	CONSTRAINT fk_catId FOREIGN KEY (categorie_id) REFERENCES  Category (id),
+	CONSTRAINT fk_enseignantId FOREIGN KEY (enseignant_id) REFERENCES users (id)
+);
+*/
+/*
+CREATE TABLE Question(
+	id INT NOT NULL AUTO_INCREMENT,
+	quiz_id INT NOT NULL,
+	question VARCHAR(255) NOT NULL,
+	option1 VARCHAR(255) NOT NULL,
+	option2 VARCHAR(255) NOT NULL,
+	option3 VARCHAR(255) NOT NULL,
+	option4 VARCHAR(255) NOT NULL,
+	correct_option VARCHAR(255) NOT NULL,
+	created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+	CONSTRAINT pk_quiz PRIMARY KEY (id),
+	CONSTRAINT fk_quizId FOREIGN KEY (quiz_id) REFERENCES  quiz (id)
+);
+*/
+/*
+CREATE TABLE Result(
+	id INT NOT NULL AUTO_INCREMENT,
+	quiz_id INT NOT NULL,
+	etudiant_id INT NOT NULL,
+	score INT NOT NULL DEFAULT 0,
+	total_questions INT NOT NULL DEFAULT 0,
+	completed_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+	CONSTRAINT pk_quiz PRIMARY KEY (id),
+	CONSTRAINT fk_quizIdResult FOREIGN KEY (quiz_id) REFERENCES  quiz (id),
+	CONSTRAINT fk_etudiantId FOREIGN KEY (etudiant_id) REFERENCES  users (id)
+);
+*/
+#ALTER TABLE users MODIFY pass VARCHAR(255) NOT NULL;
+#DROP TABLE users;
+#DROP TABLE Category
+SELECT * FROM users;
+SELECT * FROM Category;
+SELECT * FROM quiz;
+SELECT * FROM question;
+SELECT * FROM result;
+
+
+
