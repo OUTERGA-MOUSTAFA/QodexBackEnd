@@ -1,4 +1,4 @@
-#CREATE DATABASE test;
+#CREATE DATABASE Qodex;
 USE test;
 /*
 CREATE TABLE users(
@@ -10,7 +10,7 @@ CREATE TABLE users(
 	Created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 	CONSTRAINT check_Role CHECK (ROLE in ('enseignant', 'etudiant'))
 );
-*//*
+/*
 CREATE TABLE Category(
 	id INT NOT NULL AUTO_INCREMENT,
 	nom VARCHAR(50) NOT NULL,
@@ -34,8 +34,10 @@ CREATE TABLE quiz(
 	updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	is_active BOOLEAN DEFAULT FALSE,
 	CONSTRAINT pk_quiz PRIMARY KEY (id),
-	CONSTRAINT fk_catId FOREIGN KEY (categorie_id) REFERENCES  Category (id),
+	CONSTRAINT fk_catId FOREIGN KEY (categorie_id) REFERENCES  Category (id)
+	ON DELETE CASCADE ON UPDATE CASCADE,
 	CONSTRAINT fk_enseignantId FOREIGN KEY (enseignant_id) REFERENCES users (id)
+	ON DELETE CASCADE ON UPDATE CASCADE
 );
 */
 /*
@@ -50,7 +52,9 @@ CREATE TABLE Question(
 	correct_option VARCHAR(255) NOT NULL,
 	created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 	CONSTRAINT pk_quiz PRIMARY KEY (id),
-	CONSTRAINT fk_quizId FOREIGN KEY (quiz_id) REFERENCES  quiz (id)
+	
+	CONSTRAINT fk_quizId FOREIGN KEY (quiz_id) REFERENCES  quiz (id) 
+	ON DELETE CASCADE ON UPDATE CASCADE
 );
 */
 /*
@@ -62,18 +66,20 @@ CREATE TABLE Result(
 	total_questions INT NOT NULL DEFAULT 0,
 	completed_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 	CONSTRAINT pk_quiz PRIMARY KEY (id),
-	CONSTRAINT fk_quizIdResult FOREIGN KEY (quiz_id) REFERENCES  quiz (id),
+	CONSTRAINT fk_quizIdResult FOREIGN KEY (quiz_id) REFERENCES  quiz (id)
+	ON DELETE CASCADE ON UPDATE CASCADE,
 	CONSTRAINT fk_etudiantId FOREIGN KEY (etudiant_id) REFERENCES  users (id)
+	ON DELETE CASCADE ON UPDATE CASCADE
 );
 */
 #ALTER TABLE users MODIFY pass VARCHAR(255) NOT NULL;
 #DROP TABLE users;
-#DROP TABLE Category
+#DROP TABLE Category;
+#DROP TABLE result
+#DROP TABLE question
+#DROP TABLE quiz
 SELECT * FROM users;
 SELECT * FROM Category;
 SELECT * FROM quiz;
 SELECT * FROM question;
 SELECT * FROM result;
-
-
-
