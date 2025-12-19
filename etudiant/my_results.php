@@ -7,7 +7,7 @@
 </head>
 <body>
     <!-- Student Results -->
-    <div id="studentResults" class="student-section hidden">
+    <div id="studentResults" class="student-section">
         <div class="bg-gradient-to-r from-green-600 to-teal-600 text-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <button onclick="showStudentSection('studentDashboard')" class="text-white hover:text-green-100 mb-4">

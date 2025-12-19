@@ -4,19 +4,19 @@
 session_start();
     if(isset($_SESSION["Role"])){
         if($_SESSION["Role"] != "enseignant"){
-            header('location: Error401.php');
+            header('location: ../Error401.php');
             exit();
     }}else{
-    header('location:login.php');
+    header('location:../auth/login.php');
         exit();
     }
 
     if(isset($_POST['deconnect'])){
-        header('location:deconnect.php');
+        header('location:../Session_Cookie/deconnect.php');
         exit();
     }
 
-    include('database.php');
+    include('../config/database.php');
     
     function getIdEnseignant(PDO $pdo, $email): array{
         $idrequet = 'SELECT id FROM users where email =?';
@@ -334,7 +334,7 @@ $pdo =null;
             </div>
         </div>
     </div>
-    <script src='assets/script.js'></script>
+    <script src='../script.js'></script>
     <?php if(strlen($errorcat)>0 || strlen($errordescription)>0): ?>
         <script>
             openModal('createCategoryModal');

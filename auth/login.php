@@ -1,6 +1,6 @@
 
 <?php
-if (session_status() === PHP_SESSION_NONE) {
+if (session_status() === 'PHP_SESSION_NONE') {
     session_start();
 }
 if(isset($_POST['register'])){
@@ -9,16 +9,16 @@ if(isset($_POST['register'])){
 }
 if(isset($_SESSION['Name'] , $_SESSION['Role'])){
     if($_SESSION['Role']!='etudiant'){
-        header('location:Ensignant.php');
+        header('location:../enseignant/Ensignant.php');
         exit();
     }elseif($_SESSION['Role']!='enseignant'){
-        header('location:etudiant/Etudiant.php');
+        header('location:../etudiant/Etudiant.php');
         exit();
     }
     header('location:register.php');
     exit();
 }
-    include_once('database.php');
+    include_once('../config/database.php');
     $errorsEmail ='';
     $errorspass = '';
 
@@ -74,7 +74,7 @@ if (isset($_POST['Log'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
-    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="../style.css">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 <body>

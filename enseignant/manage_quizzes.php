@@ -16,12 +16,12 @@ session_start();
             header('location: Error401.php');
             exit();
     }}else{
-    header('location:login.php');
+    header('location:../auth/login.php');
         exit();
     }
 
     if(isset($_POST['deconnect'])){
-        header('location:deconnect.php');
+        header('location:../Session_Cookie/deconnect.php');
         exit();
     }
 ?>
@@ -36,7 +36,7 @@ session_start();
 </head>
 <body>
     <!-- Navigation Enseignant -->
-    <?php include_once('nav.php'); ?>
+    <?php include_once('../includes/nav.php'); ?>
     <!-- Results Section -->
 <div id="teacherSpace" class="pt-16">
     <div id="results" class="section-content ">
@@ -83,6 +83,6 @@ session_start();
         </div>
     </div>
 </div>
-  <script src='assets/script.js'></script>
+  <script src='../script.js'></script>
 </body>
 </html>

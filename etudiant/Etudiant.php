@@ -7,7 +7,7 @@
         header('location: ../Error401.php');
     }
 }else{
-    header('location:../login.php');
+    header('location:../auth/login.php');
 }
     echo "<script>alert('Bienvenue " .$_SESSION['Name'].$_SESSION['Role']."!');</script>";
     
@@ -196,7 +196,7 @@
 
     
 
-<script src="assets/script.js"></script>
+<script src="../script.js"></script>
 <script>
     let timeLeft = <?= $time_limit ?>;
     let timer = setInterval(() => {

@@ -19,19 +19,19 @@ session_start();
 
     if(isset($_SESSION["Role"])){
         if($_SESSION["Role"] != "enseignant"){
-            header('location: Error401.php');
+            header('location: ../Error401.php');
             exit();
     }}else{
-    header('location:login.php');
+    header('location:../auth/login.php');
         exit();
     }
 
     if(isset($_POST['deconnect'])){
-        header('location:deconnect.php');
+        header('location:../Session_Cookie/deconnect.php');
         exit();
     }
     
-include_once('database.php');
+include_once('../config/database.php');
     //function remplissage list categorie and id cat hidden 
     function getIdEnseignant(PDO $pdo, $email): array{
         $requet = 'SELECT id FROM users where email =?';
@@ -262,6 +262,6 @@ $pdo =null;
             </div>
         </div>
     </div>
-    <script src='assets/script.js'></script>
+    <script src='../script.js'></script>
 </body>
 </html>

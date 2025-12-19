@@ -1,7 +1,7 @@
 <?php
     if($_SERVER['REQUEST_METHOD'] === "POST"){
         if(isset($_POST['dashboard'])){
-        header('Location: Ensignant.php');
+        header('Location: ../enseignant/Ensignant.php');
         exit();
         } 
         if(isset($_POST['NouvelleQuiz'])){
@@ -9,15 +9,15 @@
             exit();
         } 
         if(isset($_POST['NouvelleCategorie'])){
-            header('Location: add_categorie.php');
+            header('Location: ../enseignant/add_categorie.php');
             exit();
         } 
         if(isset($_POST['Results'])){
-            header('Location: manage_quizzes.php');
+            header('Location: ../enseignant/manage_quizzes.php');
             exit();
         }
         if(isset($_POST['creerQuiz'])){
-            header('Location: add_quiz.php');
+            header('Location: ../enseignant/add_quiz.php');
             exit();
         }
     }
