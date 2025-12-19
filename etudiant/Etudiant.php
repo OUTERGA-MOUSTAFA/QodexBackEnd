@@ -4,10 +4,10 @@
     // include_once('session.php');
     if(isset($_SESSION["Role"])){
     if($_SESSION["Role"] != "etudiant"){
-        header('location: Error401.php');
+        header('location: ../Error401.php');
     }
 }else{
-    header('location:login.php');
+    header('location:../login.php');
 }
     echo "<script>alert('Bienvenue " .$_SESSION['Name'].$_SESSION['Role']."!');</script>";
     
@@ -24,7 +24,7 @@
 <body>
     
 
-<!-- ESPACE ÉTUDIANT -->
+ <!-- ESPACE ÉTUDIANT -->
  <div id="studentSpace" class="pt-16">
         
         <!-- Student Dashboard -->
@@ -129,7 +129,7 @@
                         </div>
                         <div class="text-right">
                             <div class="text-sm text-green-100 mb-1">Temps restant</div>
-                            <div class="text-3xl font-bold" id="timer"><?= $time_limit ?></div>
+                            <div class="text-3xl font-bold" id="timer">30:00</div>
                         </div>
                     </div>
                 </div>
@@ -191,140 +191,10 @@
             </div>
         </div>
 
-        <!-- Student Results -->
-        <div id="studentResults" class="student-section hidden">
-            <div class="bg-gradient-to-r from-green-600 to-teal-600 text-white">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                    <button onclick="showStudentSection('studentDashboard')" class="text-white hover:text-green-100 mb-4">
-                        <i class="fas fa-arrow-left mr-2"></i>Retour au tableau de bord
-                    </button>
-                    <h1 class="text-4xl font-bold mb-2">Mes Résultats</h1>
-                    <p class="text-xl text-green-100">Suivez votre progression et vos performances</p>
-                </div>
-            </div>
-
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                <!-- Stats Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                    <div class="bg-white rounded-xl shadow-md p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-gray-500 text-sm">Quiz Complétés</p>
-                                <p class="text-3xl font-bold text-gray-900">24</p>
-                            </div>
-                            <div class="bg-blue-100 p-3 rounded-lg">
-                                <i class="fas fa-check-circle text-blue-600 text-2xl"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-xl shadow-md p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-gray-500 text-sm">Moyenne</p>
-                                <p class="text-3xl font-bold text-gray-900">16.5/20</p>
-                            </div>
-                            <div class="bg-green-100 p-3 rounded-lg">
-                                <i class="fas fa-star text-green-600 text-2xl"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-xl shadow-md p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-gray-500 text-sm">Taux Réussite</p>
-                                <p class="text-3xl font-bold text-gray-900">85%</p>
-                            </div>
-                            <div class="bg-purple-100 p-3 rounded-lg">
-                                <i class="fas fa-chart-line text-purple-600 text-2xl"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-xl shadow-md p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-gray-500 text-sm">Classement</p>
-                                <p class="text-3xl font-bold text-gray-900">#12</p>
-                            </div>
-                            <div class="bg-yellow-100 p-3 rounded-lg">
-                                <i class="fas fa-trophy text-yellow-600 text-2xl"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Results Table -->
-                <div class="bg-white rounded-xl shadow-md overflow-hidden">
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-gray-50">
-                                <tr>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Quiz</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Catégorie</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Score</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Temps</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Statut</th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
-                                <tr class="hover:bg-gray-50">
-                                    <td class="px-6 py-4 text-sm font-medium text-gray-900">Les Bases de HTML5</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">HTML/CSS</span>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="text-lg font-bold text-green-600">18/20</span>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">04 Déc 2024</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">28:45</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                            <i class="fas fa-check mr-1"></i>Réussi
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50">
-                                    <td class="px-6 py-4 text-sm font-medium text-gray-900">CSS Avancé</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">HTML/CSS</span>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="text-lg font-bold text-green-600">15/20</span>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">03 Déc 2024</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">24:12</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                            <i class="fas fa-check mr-1"></i>Réussi
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50">
-                                    <td class="px-6 py-4 text-sm font-medium text-gray-900">JavaScript Fondamentaux</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="px-2 py-1 text-xs font-semibold rounded-full bg-purple-100 text-purple-800">JavaScript</span>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="text-lg font-bold text-red-600">8/20</span>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">02 Déc 2024</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?= $time_limit ?></td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                                            <i class="fas fa-times mr-1"></i>Échoué
-                                        </span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
     </div>
+
+    
 
 <script src="assets/script.js"></script>
 <script>
@@ -339,6 +209,168 @@
         }
     }, 1000);
 
+
+// ==================== STUDENT QUIZ FUNCTIONS ====================
+
+// Load quizzes based on category
+function loadQuizzesForCategory(categoryName) {
+    const quizContainer = document.getElementById('quizListContainer');
+    
+    // Quiz data by category
+    const quizData = {
+        'HTML/CSS': [
+            {
+                title: 'Les Bases de HTML5',
+                description: 'Testez vos connaissances sur les éléments HTML5 et leur utilisation',
+                questions: quizQuestions['Les Bases de HTML5']?.length || 3,
+                duration: 30,
+                rating: 4.8,
+                badge: 'bg-blue-100 text-blue-700'
+            },
+            {
+                title: 'CSS Avancé',
+                description: 'Flexbox, Grid, animations et responsive design',
+                questions: quizQuestions['CSS Avancé']?.length || 1,
+                duration: 25,
+                rating: 4.6,
+                badge: 'bg-blue-100 text-blue-700'
+            }
+        ],
+        'JavaScript': [
+            {
+                title: 'JavaScript Fondamentaux',
+                description: 'Variables, types de données, opérateurs et structures de contrôle',
+                questions: quizQuestions['JavaScript Fondamentaux']?.length || 1,
+                duration: 35,
+                rating: 4.7,
+                badge: 'bg-purple-100 text-purple-700'
+            }
+        ],
+        'PHP/MySQL': [
+            {
+                title: 'PHP Basics',
+                description: 'Syntaxe de base, variables et opérations en PHP',
+                questions: 20,
+                duration: 30,
+                rating: 4.6,
+                badge: 'bg-green-100 text-green-700'
+            }
+        ]
+    };
+
+    const quizzes = quizData[categoryName] || [];
+    
+    quizContainer.innerHTML = quizzes.map(quiz => `
+        <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="px-3 py-1 ${quiz.badge} text-xs font-semibold rounded-full">${categoryName}</span>
+                    <span class="text-yellow-500"><i class="fas fa-star"></i> ${quiz.rating}</span>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">${quiz.title}</h3>
+                <p class="text-gray-600 mb-4 text-sm">${quiz.description}</p>
+                <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
+                    <span><i class="fas fa-question-circle mr-1"></i>${quiz.questions} questions</span>
+                    <span><i class="fas fa-clock mr-1"></i>${quiz.duration} min</span>
+                </div>
+                <button onclick="startQuiz('${quiz.title}')" class="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition">
+                    <i class="fas fa-play mr-2"></i>Commencer le Quiz
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
+
+// ==================== SUBMIT QUIZ ====================
+function submitQuiz() {
+    clearInterval(timerInterval);
+    
+    if (!currentQuiz) return;
+    
+    // Calculate score
+    const questions = quizQuestions[currentQuiz];
+    let score = 0;
+    let totalQuestions = questions.length;
+    
+    studentAnswers.forEach((answer, index) => {
+        if (answer === questions[index].correct) {
+            score++;
+        }
+    });
+    
+    const percentage = Math.round((score / totalQuestions) * 100);
+    
+    // Show results
+    const resultHTML = `
+        <div class="bg-white rounded-xl shadow-lg p-8 text-center">
+            <div class="w-24 h-24 mx-auto rounded-full bg-green-100 flex items-center justify-center mb-6">
+                <i class="fas fa-trophy text-4xl text-green-600"></i>
+            </div>
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Quiz Terminé!</h2>
+            <p class="text-gray-600 mb-8">Vous avez complété <span class="font-bold">${currentQuiz}</span></p>
+            
+            <div class="bg-gray-50 rounded-lg p-6 mb-8">
+                <div class="flex justify-between items-center mb-4">
+                    <div class="text-center">
+                        <p class="text-gray-500 text-sm">Score</p>
+                        <p class="text-4xl font-bold text-gray-900">${score}/${totalQuestions}</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-gray-500 text-sm">Pourcentage</p>
+                        <p class="text-4xl font-bold ${percentage >= 70 ? 'text-green-600' : 'text-red-600'}">
+                            ${percentage}%
+                        </p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-gray-500 text-sm">Statut</p>
+                        <p class="text-xl font-bold ${percentage >= 70 ? 'text-green-600' : 'text-red-600'}">
+                            ${percentage >= 70 ? 'Réussi' : 'Échoué'}
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="w-full bg-gray-200 rounded-full h-4">
+                    <div class="bg-green-600 h-4 rounded-full" style="width: ${percentage}%"></div>
+                </div>
+            </div>
+            
+            <div class="mb-8 text-left">
+                <h3 class="text-xl font-bold text-gray-900 mb-4">Détail des réponses:</h3>
+                ${questions.map((q, index) => {
+                    const userAnswer = studentAnswers[index];
+                    const isCorrect = userAnswer === q.correct;
+                    const hasAnswered = userAnswer !== undefined;
+                    
+                    return `
+                        <div class="mb-4 p-4 ${isCorrect ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'} border rounded-lg">
+                            <p class="font-bold mb-2">${index + 1}. ${q.question}</p>
+                            <p class="mb-1">Votre réponse: <span class="${isCorrect ? 'text-green-600' : 'text-red-600'} font-bold">
+                                ${hasAnswered ? q.options[userAnswer] : 'Non répondue'}
+                            </span></p>
+                            ${!isCorrect ? `<p class="text-green-600 font-bold">Bonne réponse: ${q.options[q.correct]}</p>` : ''}
+                        </div>
+                    `;
+                }).join('')}
+            </div>
+            
+            <div class="flex gap-3 justify-center">
+                <button onclick="showStudentSection('studentDashboard')" class="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition">
+                    <i class="fas fa-home mr-2"></i>Tableau de bord
+                </button>
+                <button onclick="showStudentSection('studentResults')" class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+                    <i class="fas fa-chart-bar mr-2"></i>Voir tous mes résultats
+                </button>
+            </div>
+        </div>
+    `;
+    
+    // Replace quiz interface with results
+    const quizContainer = document.querySelector('#takeQuiz .max-w-4xl');
+    quizContainer.innerHTML = resultHTML;
+    
+    // Store result in localStorage (simulating database)
+    saveQuizResult(currentQuiz, score, totalQuestions, percentage);
+}
 </script>
 </body>
 </html>

@@ -1,9 +1,8 @@
 
 <?php
-
     if(isset($_POST['btnSubmit'])){
-            // filter_var($_POST['name'], FILTER_SANTIZE_STRING); ==> kathiyed tag html
-            // filter_var($_POST['name'], FILTER_SANTIZE_STRING); ==> kathiyed tag html
+            // filter_var($_POST['name'], FILTER_SANITIZE_STRING); ==> kathiyed tag html
+            // filter_var($_POST['name'], FILTER_SANITIZE_STRING); ==> kathiyed tag html
             // htmlspecialchars ==> mkat9rax les tag html et css
             $F_name =htmlspecialchars(trim($_POST['first_name'])) ;
             $Role = htmlspecialchars(trim($_POST['roles'] ?? ''));
@@ -31,7 +30,7 @@
             }
 
             if(empty($repeat_pass)){
-                $errors = "repeat password is empty";
+                $errorsrepeatpass = "repeat password is empty";
             }elseif($repeat_pass !== $pass){
                 $errorsrepeatpass ='repeat password not valid';
             }
@@ -40,7 +39,7 @@
                 $errorsemail ='email is not valid';
             }
           include('database.php');
-            $sql = "SELECT * from utilisateurs where email = ?";
+            $sql = "SELECT * from users where email = ?";
             $stmt = $pdo->prepare($sql);
             $stmt->execute([$email]);
             $exist = $stmt->fetch();
@@ -55,24 +54,28 @@
                 include('database.php');
                 // let's hash password 
                 $hashedPassword = password_hash($pass, PASSWORD_DEFAULT);
-                $sql ="INSERT INTO utilisateurs (Name,Role,email, Pass)
-                             value(?,?,?,?)";
+                $sql ="INSERT INTO users (Name,Role,email, Pass)
+                             VALUES(?,?,?,?)";
                 try {
 
                     $stmt = $pdo->prepare($sql);
                     $stmt->execute([$F_name, $Role, $email, $hashedPassword]);
-
-                    echo "<script>alert('$F_name registered successfully!');</script>";
                     
-                    header('location:login.php');
+                    echo "<script>
+                        alert('$F_name registered successfully!');
+                        window.location.href='login.php';
+                        </script>";
                 } catch (PDOException $e) {
                     echo "Database errors Moustafa write this problem on register page: " . $e->getMessage();
                 }
                 $pdo = null;
                 
             }
-        }
-   
+    }
+   if(isset($_POST['login'])){
+    header('Location:login.php');
+    exit();
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -97,8 +100,7 @@
        <div class="relative z-0 w-full mb-5 group">
             <input type="text" name="first_name" id="floating_first_name" placeholder=" "
                 class="block py-2.5 px-0 w-full text-sm text-heading bg-transparent border-0 border-b-2 border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer"/>
-            <label for="first_name"
-                class="absolute text-sm text-body duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+            <label for="first_name" class="absolute text-sm text-body duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                 Name
             </label>
         </div>
@@ -157,12 +159,16 @@
    
         <div class="flex items-start mb-5">
             <label for="remember-alternative" class="flex items-center h-5">
-            <input id="remember-alternative" type="checkbox" value="" class="w-4 h-4 border border-default-medium rounded-xs bg-neutral-secondary-medium focus:ring-2 focus:ring-brand-soft" required />
+            <input id="remember-alternative" type="checkbox" value="" class="w-4 h-4 border border-default-medium rounded-xs bg-neutral-secondary-medium focus:ring-2 focus:ring-brand-soft" />
             <p class="ms-2 text-sm font-medium text-heading select-none">I accept cookies and sessions <a href="#" class="text-fg-brand hover:underline"> also terms and conditions this site</a>.</p>
             </label>
         </div>
-
-    <button type="submit" name="btnSubmit" class="text-white bg-green rounded-md box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">Enregistre</button>
+        <div class="footerForm">
+            <button type="submit" name="btnSubmit" class="cursor-pointer text-white bg-green rounded-md box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">Enregistre</button>
+            <button  tuype="button" name='login' class="cursor-pointer text-white bg-green rounded-md box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
+                Login
+            </button>
+        </div>
     </fieldset>
     </form>
     </main>
