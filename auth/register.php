@@ -1,77 +1,77 @@
 
 <?php
     if(isset($_POST['btnSubmit'])){
-            // filter_var($_POST['name'], FILTER_SANITIZE_STRING); ==> kathiyed tag html
-            // filter_var($_POST['name'], FILTER_SANITIZE_STRING); ==> kathiyed tag html
-            // htmlspecialchars ==> mkat9rax les tag html et css
-            $F_name =htmlspecialchars(trim($_POST['first_name'])) ;
-            $Role = htmlspecialchars(trim($_POST['roles'] ?? ''));
-            $email = htmlspecialchars(trim($_POST['email']));
-            $pass = htmlspecialchars(trim($_POST['password']));
-            $repeat_pass = trim($_POST['repeat_password']);
-            //$age = filter_var($_POST['age'],FILTER_VALIDATE_NUMBER_INT); => kat9bel num avec - ou +
-            $errorsname = '';
-            $errorsrole = '';
-             $errorsemail = '';
-              $errorspass = '';
-               $errorsrepeatpass = '';
-            if(empty($F_name)){
-                $errorsname = "First Name is empty";
-            }
+        // filter_var($_POST['name'], FILTER_SANITIZE_STRING); ==> kathiyed tag html
+        // filter_var($_POST['name'], FILTER_SANITIZE_STRING); ==> kathiyed tag html
+        // htmlspecialchars ==> mkat9rax les tag html et css
+        $F_name =htmlspecialchars(trim($_POST['first_name'])) ;
+        $Role = htmlspecialchars(trim($_POST['roles'] ?? ''));
+        $email = htmlspecialchars(trim($_POST['email']));
+        $pass = htmlspecialchars(trim($_POST['password']));
+        $repeat_pass = trim($_POST['repeat_password']);
+        //$age = filter_var($_POST['age'],FILTER_VALIDATE_NUMBER_INT); => kat9bel num avec - ou +
+        $errorsname = '';
+        $errorsrole = '';
+            $errorsemail = '';
+            $errorspass = '';
+            $errorsrepeatpass = '';
+        if(empty($F_name)){
+            $errorsname = "First Name is empty";
+        }
 
-            if($Role == "" ){
-                $errorsrole ="Choose your Role";
-            }
+        if($Role == "" ){
+            $errorsrole ="Choose your Role";
+        }
 
-            if(empty($pass)){
-                $errorspass = "password is empty";
-            }elseif( strlen($pass)>0&&strlen($pass)<8 ){
-                $errorspass = "password shold be more or equal 8 !";
-            }
+        if(empty($pass)){
+            $errorspass = "password is empty";
+        }elseif( strlen($pass)>0&&strlen($pass)<8 ){
+            $errorspass = "password shold be more or equal 8 !";
+        }
 
-            if(empty($repeat_pass)){
-                $errorsrepeatpass = "repeat password is empty";
-            }elseif($repeat_pass !== $pass){
-                $errorsrepeatpass ='repeat password not valid';
-            }
+        if(empty($repeat_pass)){
+            $errorsrepeatpass = "repeat password is empty";
+        }elseif($repeat_pass !== $pass){
+            $errorsrepeatpass ='repeat password not valid';
+        }
 
-            if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-                $errorsemail ='email is not valid';
-            }
-          include('database.php');
-            $sql = "SELECT * from users where email = ?";
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute([$email]);
-            $exist = $stmt->fetch();
-            if($exist){
-                $errorsemail = "This email is already used!";
-                $pdo = null;
-            }
-            if($errorsname == "" && $errorsrole == ""  && $errorspass == "" && $errorsrepeatpass == "" && $errorsemail == ""){
-                //insertion data to database
+        if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+            $errorsemail ='email is not valid';
+        }
+        include_once('../config/database.php');
+        $sql = "SELECT * from users where email = ?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$email]);
+        $exist = $stmt->fetch();
+        if($exist){
+            $errorsemail = "This email is already used!";
+            $pdo = null;
+        }
+        if($errorsname == "" && $errorsrole == ""  && $errorspass == "" && $errorsrepeatpass == "" && $errorsemail == ""){
+            //insertion data to database
 
-                // 1- connection a la database
-                include('database.php');
-                // let's hash password 
-                $hashedPassword = password_hash($pass, PASSWORD_DEFAULT);
-                $sql ="INSERT INTO users (Name,Role,email, Pass)
-                             VALUES(?,?,?,?)";
-                try {
+            // 1- connection a la database
+            include('database.php');
+            // let's hash password 
+            $hashedPassword = password_hash($pass, PASSWORD_DEFAULT);
+            $sql ="INSERT INTO users (Name,Role,email, Pass)
+                            VALUES(?,?,?,?)";
+            try {
 
-                    $stmt = $pdo->prepare($sql);
-                    $stmt->execute([$F_name, $Role, $email, $hashedPassword]);
-                    
-                    echo "<script>
-                        alert('$F_name registered successfully!');
-                        window.location.href='login.php';
-                        </script>";
-                } catch (PDOException $e) {
-                    echo "Database errors Moustafa write this problem on register page: " . $e->getMessage();
-                }
-                $pdo = null;
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute([$F_name, $Role, $email, $hashedPassword]);
                 
+                echo "<script>
+                    alert('$F_name registered successfully!');
+                    window.location.href='login.php';
+                    </script>";
+            } catch (PDOException $e) {
+                echo "Database errors Moustafa write this problem on register page: " . $e->getMessage();
             }
-    }
+            $pdo = null;
+            
+        }
+}
    if(isset($_POST['login'])){
     header('Location:login.php');
     exit();
