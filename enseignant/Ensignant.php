@@ -11,6 +11,10 @@ session_start();
         // echo '</pre>';
         // }
 
+        echo '<pre>';
+        print_r($_SERVER);
+            echo '<pre>';
+
     if(isset($_SESSION["Role"])){
         if($_SESSION["Role"] != "enseignant"){
             header('location: ../Error401.php');

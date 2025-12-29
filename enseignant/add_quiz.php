@@ -10,12 +10,12 @@ session_start();
     // print_r($_SERVER);
     // echo '</pre>';
     // }
-    function generate_csrf_token(){
-        if(empty($_SESSION['csrf_token'])){
-            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-        }
-        return $_SESSION['csrf_token'];
-    }
+    // function generate_csrf_token(){
+    //     if(empty($_SESSION['csrf_token'])){
+    //         $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    //     }
+    //     return $_SESSION['csrf_token'];
+    // }
 
     if(isset($_SESSION["Role"])){
         if($_SESSION["Role"] != "enseignant"){
@@ -31,15 +31,14 @@ session_start();
         exit();
     }
     
-include_once('../config/database.php');
+    include_once('../config/database.php');
     //function remplissage list categorie and id cat hidden 
     function getIdEnseignant(PDO $pdo, $email): array{
-        $requet = 'SELECT id FROM users where email =?';
-    
+        $requet = 'SELECT * FROM users where email =?';
         try {
         $stm = $pdo->prepare($requet);
         $stm->execute([$email]);
-        $idEnseignant = $stm->fetch()?:[];
+        $idEnseignant = $stm->fetch()??[];
 
         return $idEnseignant;
         }catch(PDOException $e){
